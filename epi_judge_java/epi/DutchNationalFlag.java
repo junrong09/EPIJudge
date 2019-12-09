@@ -12,22 +12,17 @@ public class DutchNationalFlag {
 
   public static void dutchFlagPartition(int pivotIndex, List<Color> A) {
     // TODO - you fill in here.
-    int s = 0, e = 0, p = A.get(pivotIndex).ordinal();
-    while (e < A.size()) {
-	    if (A.get(e).ordinal() < p) {
-		    Collections.swap(A, e, s);
-		    s++;
+    int p1 = 0, p = 0, p2 = A.size(), pivot = A.get(pivotIndex).ordinal();
+    while (p < p2) {
+	    if (A.get(p).ordinal() < pivot) {
+		    Collections.swap(A, p1, p);
+		    p1++;
+		    p++;
+	    } else if (A.get(p).ordinal() > pivot) {
+		    Collections.swap(A, p, --p2);
+	    } else {
+		    p++;
 	    }
-	    e++;
-    }
-
-    e = s;
-    while (e < A.size()) {
-	    if (A.get(e).ordinal() == p) {
-		Collections.swap(A, e, s);
-		s++;
-	    }
-	    e++;
     }
   }
 
