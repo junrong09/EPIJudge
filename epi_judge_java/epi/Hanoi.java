@@ -3,6 +3,7 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
@@ -14,8 +15,24 @@ public class Hanoi {
 
   public static List<List<Integer>> computeTowerHanoi(int numRings) {
     // TODO - you fill in here.
-    return Collections.emptyList();
+    List<List<Integer>> result = new ArrayList<>();
+    if (numRings < 1) return result;
+
+    move(numRings, 0, 1, 2, result);
+    return result;
   }
+
+  private static void move(int n, int from, int to, int using, List<List<Integer>> result) {
+    if (n == 1) {
+      result.add(Arrays.asList(from, to));
+      return;
+    }
+
+    move(n - 1, from, using, to, result);
+    result.add(Arrays.asList(from, to));
+    move(n - 1, using, to, from, result);
+  }
+
   @EpiTest(testDataFile = "hanoi.tsv")
   public static void computeTowerHanoiWrapper(TimedExecutor executor,
                                               int numRings) throws Exception {
