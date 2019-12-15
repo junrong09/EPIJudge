@@ -7,7 +7,21 @@ public class ThreeSum {
 
   public static boolean hasThreeSum(List<Integer> A, int t) {
     // TODO - you fill in here.
-    return true;
+    A.sort((x,y) -> x-y);
+    for (int a : A) {
+      int v = t - a;
+      int s = 0, e = A.size() - 1;
+      while (s <= e) {
+        if (A.get(s) + A.get(e) > v) {
+          e--;
+        } else if (A.get(s) + A.get(e) < v) {
+          s++;
+        } else {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public static void main(String[] args) {
