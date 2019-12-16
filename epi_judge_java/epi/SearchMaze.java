@@ -6,6 +6,11 @@ import epi.test_framework.TestFailure;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Objects;
+
 public class SearchMaze {
   @EpiUserType(ctorParams = {int.class, int.class})
 
@@ -33,6 +38,11 @@ public class SearchMaze {
       }
       return true;
     }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(x, y);
+    }
   }
 
   public enum Color { WHITE, BLACK }
@@ -40,8 +50,50 @@ public class SearchMaze {
   public static List<Coordinate> searchMaze(List<List<Color>> maze,
                                             Coordinate s, Coordinate e) {
     // TODO - you fill in here.
-    return Collections.emptyList();
+    List<Coordinate> paths = new LinkedList<>();
+    Set<Coordinate> visited = new HashSet<>();
+    isPath(maze, s, e, paths, visited);
+    return paths;
   }
+
+  private static boolean isPath(List<List<Color>> maze, Coordinate s, Coordinate e, List<Coordinate> paths, Set<Coordinate> visited) {
+    visited.add(new Coordinate(s.x, s.y));
+    if (s.equals(e)) {
+      paths.add(0, e);
+      return true;
+    }
+
+    for (Coordinate c : getMovableWhite(maze, s, visited)) {
+      if (isPath(maze, c, e, paths, visited)) {
+        paths.add(0, s);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static List<Coordinate> getMovableWhite(List<List<Color>> maze, Coordinate s, Set<Coordinate> visited) {
+    List<Coordinate> movable = new ArrayList<>();
+    int maxX = maze.size();
+    int maxY = maze.get(0).size();
+    if (s.x + 1 < maxX && !visited.contains(new Coordinate(s.x + 1, s.y)) && maze.get(s.x+1).get(s.y) == Color.WHITE) {
+      movable.add(new Coordinate(s.x+1, s.y));
+    }
+
+    if (s.x - 1 >= 0 && !visited.contains(new Coordinate(s.x - 1, s.y)) && maze.get(s.x-1).get(s.y) == Color.WHITE) {
+      movable.add(new Coordinate(s.x-1, s.y));
+    }
+
+    if (s.y + 1 < maxY && !visited.contains(new Coordinate(s.x, s.y+1)) && maze.get(s.x).get(s.y+1) == Color.WHITE) {
+      movable.add(new Coordinate(s.x, s.y+1));
+    }
+
+    if (s.y - 1 >= 0 && !visited.contains(new Coordinate(s.x, s.y-1)) && maze.get(s.x).get(s.y-1) == Color.WHITE) {
+      movable.add(new Coordinate(s.x, s.y-1));
+    }
+    return movable;
+  }
+
   public static boolean pathElementIsFeasible(List<List<Integer>> maze,
                                               Coordinate prev, Coordinate cur) {
     if (!(0 <= cur.x && cur.x < maze.size() && 0 <= cur.y &&
