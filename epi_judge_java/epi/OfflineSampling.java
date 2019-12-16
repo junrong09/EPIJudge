@@ -6,10 +6,19 @@ import epi.test_framework.TimedExecutor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 public class OfflineSampling {
   public static void randomSampling(int k, List<Integer> A) {
     // TODO - you fill in here.
-    return;
+    Random r1 = new Random();
+    int n = 0;
+    while (n < k) {
+      Collections.swap(A, n, r1.nextInt(A.size() - n) + n);
+      n++;
+    }
+    while (A.size() > k) {
+      A.remove(A.size()-1);
+    }
   }
   private static boolean randomSamplingRunner(TimedExecutor executor, int k,
                                               List<Integer> A)
