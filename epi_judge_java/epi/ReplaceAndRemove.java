@@ -8,8 +8,40 @@ public class ReplaceAndRemove {
 
   public static int replaceAndRemove(int size, char[] s) {
     // TODO - you fill in here.
-    return 0;
+    // Remove 'b' and shift
+    int count = 0;
+    for (int i = 0; i < size; i++) {
+      if (s[i] == 'b') {
+        count++;
+      } else {
+        s[i-count] = s[i];
+      }
+    }
+    size -= count;
+    // Shift and provide space for 'a'
+    int finalSize = 0;
+    for (int i = 0; i < size; i++) {
+      if (s[i] == 'a') finalSize += 1;
+      finalSize += 1;
+    }
+
+    int shift = finalSize - size;
+    for (int i = size - 1; i >= 0; i--) {
+      if (s[i] == 'a') {
+        shift--;
+        s[i+shift] = s[i];
+        s[i+shift] = 'd';
+        s[i+shift+1] = 'd';
+      } else {
+        s[i+shift] = s[i];
+      }
+    }
+    // Replace 'a' with 'd'
+    return finalSize; 
   }
+  
+
+  
   @EpiTest(testDataFile = "replace_and_remove.tsv")
   public static List<String>
   replaceAndRemoveWrapper(TimedExecutor executor, Integer size, List<String> s)
