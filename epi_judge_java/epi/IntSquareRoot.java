@@ -7,17 +7,15 @@ public class IntSquareRoot {
   public static int squareRoot(int k) {
     // TODO - you fill in here.
     int s = 0, e = k;
-    while (s != e && s+1 != e) {
+    while (s <= e) {
       int m = s + (e-s)/2;
-      if ((long) m*m == k) {
-        return m;
-      } else if ((long) m*m < k) {
-        s = m;
-      } else {
+      if ((long) m*m > k) {
         e = m - 1;
+      } else {
+        s = m + 1;
       }
     }
-    return e * e > k ? s : e;
+    return s - 1;
   }
 
   public static void main(String[] args) {
