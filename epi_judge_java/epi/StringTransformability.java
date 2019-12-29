@@ -19,31 +19,21 @@ public class StringTransformability {
       Set<String> nextSet = new HashSet<>();
       if (set.contains(t)) return level;
       for (String k : set) {
-        for (String d : D) {
-          if (isSimilar(k, d)) {
-            //D.remove(d); // Cannot remove and use its iterator concurrently
-            nextSet.add(d);
+        for (int i = 0; i < k.length(); i++) {
+          String start = k.substring(0, i);
+          String end = k.substring(i + 1, k.length());
+          for (int j = 0; j < 26; j++) {
+            String temp = start + (char)('a' + j) + end;
+            if (D.remove(temp)) {
+              nextSet.add(temp);
+            }
           }
         }
       }
-      D.removeAll(nextSet);
       level++;
       set = nextSet;
     }
     return -1;
-  }
-
-  private static boolean isSimilar(String s1, String s2) {
-    if (s1.length() != s2.length()) return false;
-    int chance = 1;
-    char[] ss1 = s1.toCharArray(), ss2 = s2.toCharArray();
-    for (int i = 0; i < s1.length(); i++) {
-      if (ss1[i] != ss2[i]) {
-        if (chance < 1) return false;
-        chance--;
-      }
-    }
-    return true;
   }
 
   public static void main(String[] args) {
