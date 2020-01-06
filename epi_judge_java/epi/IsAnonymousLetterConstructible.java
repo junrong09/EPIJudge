@@ -17,13 +17,14 @@ public class IsAnonymousLetterConstructible {
 
     for (char c : magazineText.toCharArray()) {
       if (map.containsKey(c))
-        map.put(c, map.get(c) - 1);
+        if (map.get(c) - 1 < 1) {
+          map.remove(c);
+        } else {
+          map.put(c, map.get(c) - 1);
+        }
     }
 
-    for (int i : map.values()) {
-      if (i > 0) return false;
-    }
-    return true;
+    return map.isEmpty();
   }
 
   public static void main(String[] args) {
