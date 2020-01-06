@@ -11,35 +11,16 @@ public class IsTreeSymmetric {
 
   public static boolean isSymmetric(BinaryTreeNode<Integer> tree) {
     // TODO - you fill in here.
-    List<BinaryTreeNode<Integer>> list = new ArrayList<>();
-    list.add(tree);
-    while (!list.isEmpty()) {
-      List<BinaryTreeNode<Integer>> nextList = new ArrayList<>();
-      if (!isSym(list)) {
-        return false;
-      }
-      for (BinaryTreeNode<Integer> node : list) {
-        if (node == null) continue;
-        nextList.add(node.left);
-        nextList.add(node.right);
-      }
-      list = nextList;
-    }
-    return true;
+    if (tree == null) return true;
+    return isSym(tree.left, tree.right);
   }
 
-  private static boolean isSym(List<BinaryTreeNode<Integer>> list) {
-    int s = 0, e = list.size() - 1;
-    while (s < e) {
-      if (list.get(s) != null && list.get(e) != null) {
-        if (list.get(s).data != list.get(e).data) return false;
-      } else {
-        if (list.get(s) != null || list.get(e) != null) return false;
-      }
-      s++;
-      e--;
+  private static boolean isSym(BinaryTreeNode<Integer> left, BinaryTreeNode<Integer> right) {
+    if (left == null || right == null) {
+      return left == right;
     }
-    return true;
+
+    return (left.data == right.data && isSym(left.left, right.right) && isSym(left.right, right.left));
   }
 
   public static void main(String[] args) {
