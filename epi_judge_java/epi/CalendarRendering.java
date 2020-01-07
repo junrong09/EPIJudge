@@ -4,8 +4,6 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
 public class CalendarRendering {
   @EpiUserType(ctorParams = {int.class, int.class})
@@ -33,33 +31,22 @@ public class CalendarRendering {
 
   public static int findMaxSimultaneousEvents(List<Event> A) {
     // TODO - you fill in here.
-    PriorityQueue<List<Integer>> pq = new PriorityQueue<>((x,y) -> x.get(1) - y.get(1));
+    PriorityQueue<List<Integer>> pq = new PriorityQueue<>((x,y) -> {
+      int timeDiff = x.get(1) - y.get(1);
+      if (timeDiff == 0) return x.get(0) - y.get(0);
+      return timeDiff;
+    });
     for (int i = 0; i < A.size(); i++) {
-      pq.add(Arrays.asList(i, A.get(i).start));
-      pq.add(Arrays.asList(i, A.get(i).finish));
+      pq.add(Arrays.asList(0, A.get(i).start));
+      pq.add(Arrays.asList(1, A.get(i).finish));
     }
-    Set<Integer> current = new HashSet<>();
     int max = 0;
+    int concurrent = 0;
     while (!pq.isEmpty()) {
-      List<Integer> event = pq.poll();
-      Set<Integer> remove = new HashSet<>();
-      while (!pq.isEmpty() && pq.peek().get(1) == event.get(1)) {
-        int eventId = pq.poll().get(0);
-        if (current.contains(eventId)) {
-          remove.add(eventId);
-        } else {
-          current.add(eventId);
-        }
-      }
-
-      if (current.contains(event.get(0))) {
-        remove.add(event.get(0));
-      } else {
-        current.add(event.get(0));
-      }
-
-      max = Math.max(max, current.size());
-      current.removeAll(remove);
+      int type = pq.poll().get(0);
+      if (type == 0) concurrent++;
+      else concurrent--;
+      max = Math.max(max, concurrent);
     }
     return max;
   }
