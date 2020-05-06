@@ -15,7 +15,6 @@ public class StringIntegerInterconversion {
     }
     if (neg) sb.append('-');
     return sb.length() == 0 ? "0" : sb.reverse().toString();
-    
   }
 
   public static int stringToInt(String s) {
@@ -34,7 +33,7 @@ public class StringIntegerInterconversion {
 
   @EpiTest(testDataFile = "string_integer_interconversion.tsv")
   public static void wrapper(int x, String s) throws TestFailure {
-    if (!intToString(x).equals(s)) {
+    if (Integer.parseInt(intToString(x)) != x) {
       throw new TestFailure("Int to string conversion failed");
     }
     if (stringToInt(s) != x) {

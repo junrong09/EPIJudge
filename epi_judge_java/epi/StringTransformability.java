@@ -1,13 +1,12 @@
 package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
+
 import java.util.Set;
 import java.util.HashSet;
 
 public class StringTransformability {
-
   @EpiTest(testDataFile = "string_transformability.tsv")
-
   public static int transformString(Set<String> D, String s, String t) {
     // TODO - you fill in here.
     int level = 0;
