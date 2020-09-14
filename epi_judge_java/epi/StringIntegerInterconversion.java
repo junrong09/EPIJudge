@@ -6,12 +6,31 @@ public class StringIntegerInterconversion {
 
   public static String intToString(int x) {
     // TODO - you fill in here.
-    return "0";
+    StringBuilder sb = new StringBuilder();
+    boolean neg = x < 0;
+    while (x != 0) {
+	    int v = Math.abs(x % 10);
+	    x /= 10;
+	    sb.append(v);
+    }
+    if (neg) sb.append('-');
+    return sb.length() == 0 ? "0" : sb.reverse().toString();
   }
+
   public static int stringToInt(String s) {
     // TODO - you fill in here.
-    return 0;
+    char[] cc = s.toCharArray();
+    long result = 0;
+
+    for (char c : cc) {
+	    if (c != '-') {
+		    result = (result * 10) + (c - '0');
+	    }
+    }
+    if (cc[0] == '-') result *= -1;
+    return (int) result;
   }
+
   @EpiTest(testDataFile = "string_integer_interconversion.tsv")
   public static void wrapper(int x, String s) throws TestFailure {
     if (Integer.parseInt(intToString(x)) != x) {

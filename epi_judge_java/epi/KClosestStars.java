@@ -9,6 +9,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.PriorityQueue;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
 public class KClosestStars {
   @EpiUserType(ctorParams = {double.class, double.class, double.class})
 
@@ -36,7 +41,19 @@ public class KClosestStars {
 
   public static List<Star> findClosestKStars(Iterator<Star> stars, int k) {
     // TODO - you fill in here.
-    return Collections.emptyList();
+    PriorityQueue <Star> pq = new PriorityQueue<>((x,y) -> y.compareTo(x));
+    while (stars.hasNext()) {
+      Star star = stars.next();
+      if (pq.size() < k) {
+        pq.add(star);
+      } else {
+        if (star.compareTo(pq.peek()) < 0) {
+          pq.poll();
+          pq.add(star);
+        }
+      }
+    }
+    return Arrays.asList(pq.toArray(new Star[0]));
   }
   @EpiTest(testDataFile = "k_closest_stars.tsv")
   public static List<Star> findClosestKStarsWrapper(List<Star> stars, int k) {

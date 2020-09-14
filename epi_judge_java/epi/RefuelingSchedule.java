@@ -13,7 +13,17 @@ public class RefuelingSchedule {
   public static int findAmpleCity(List<Integer> gallons,
                                   List<Integer> distances) {
     // TODO - you fill in here.
-    return 0;
+    int min = Integer.MAX_VALUE, index = 0, remain = 0;
+
+    for (int i = 0; i < distances.size(); i++) {
+      remain = remain + (gallons.get(i) * 20) - distances.get(i);
+      if (remain < min) {
+        min = remain;
+        index = i + 1;
+      }
+    }
+
+    return index % distances.size();
   }
   @EpiTest(testDataFile = "refueling_schedule.tsv")
   public static void findAmpleCityWrapper(TimedExecutor executor,

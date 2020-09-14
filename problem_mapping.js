@@ -65,7 +65,7 @@ problem_mapping = {
                 "passed": 0,
                 "total": 10000
             },
-            "Python: closest_int_same_weight.py": { 
+            "Python: closest_int_same_weight.py": {
                 "passed": 0,
                 "total": 10000
             }
@@ -428,7 +428,7 @@ problem_mapping = {
                 "total": 51
             },
             "Java: SpiralOrdering.java": {
-                "passed": 0,
+                "passed": 51,
                 "total": 51
             },
             "Python: spiral_ordering.py": {
@@ -486,7 +486,7 @@ problem_mapping = {
                 "total": 15002
             },
             "Java: StringIntegerInterconversion.java": {
-                "passed": 0,
+                "passed": 1,
                 "total": 15002
             },
             "Python: string_integer_interconversion.py": {
@@ -1828,7 +1828,7 @@ problem_mapping = {
                 "total": 949
             },
             "Java: KLargestValuesInBst.java": {
-                "passed": 0,
+                "passed": 949,
                 "total": 949
             },
             "Python: k_largest_values_in_bst.py": {
@@ -1970,7 +1970,7 @@ problem_mapping = {
                 "total": 10
             },
             "Java: Hanoi.java": {
-                "passed": 0,
+                "passed": 10,
                 "total": 10
             },
             "Python: hanoi.py": {
@@ -2012,7 +2012,7 @@ problem_mapping = {
                 "total": 8
             },
             "Java: Permutations.java": {
-                "passed": 0,
+                "passed": 8,
                 "total": 8
             },
             "Python: permutations.py": {
@@ -2546,7 +2546,7 @@ problem_mapping = {
                 "total": 48
             },
             "Java: StringTransformability.java": {
-                "passed": 0,
+                "passed": 48,
                 "total": 48
             },
             "Python: string_transformability.py": {

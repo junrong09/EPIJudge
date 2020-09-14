@@ -1,13 +1,30 @@
 package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
+import java.util.Map;
+import java.util.HashMap;
+
 public class IsAnonymousLetterConstructible {
   @EpiTest(testDataFile = "is_anonymous_letter_constructible.tsv")
 
   public static boolean isLetterConstructibleFromMagazine(String letterText,
                                                           String magazineText) {
     // TODO - you fill in here.
-    return true;
+    Map<Character, Integer> map = new HashMap<>();
+    for (char c : letterText.toCharArray()) {
+      map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+
+    for (char c : magazineText.toCharArray()) {
+      if (map.containsKey(c))
+        if (map.get(c) - 1 < 1) {
+          map.remove(c);
+        } else {
+          map.put(c, map.get(c) - 1);
+        }
+    }
+
+    return map.isEmpty();
   }
 
   public static void main(String[] args) {

@@ -9,7 +9,12 @@ public class LowestCommonAncestorWithParent {
   public static BinaryTree<Integer> lca(BinaryTree<Integer> node0,
                                         BinaryTree<Integer> node1) {
     // TODO - you fill in here.
-    return null;
+    BinaryTree<Integer> p0 = node0, p1 = node1;
+    while (p0 != p1) {
+      p0 = p0.parent == null ? node1 : p0.parent;
+      p1 = p1.parent == null ? node0 : p1.parent;
+    }
+    return p0;
   }
   @EpiTest(testDataFile = "lowest_common_ancestor.tsv")
   public static int lcaWrapper(TimedExecutor executor, BinaryTree<Integer> tree,

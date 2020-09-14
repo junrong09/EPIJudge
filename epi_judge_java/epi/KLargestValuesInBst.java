@@ -6,12 +6,23 @@ import epi.test_framework.GenericTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.ArrayList;
 public class KLargestValuesInBst {
   @EpiTest(testDataFile = "k_largest_values_in_bst.tsv")
 
   public static List<Integer> findKLargestInBst(BstNode<Integer> tree, int k) {
     // TODO - you fill in here.
-    return Collections.emptyList();
+    List<Integer> result = new ArrayList<>();
+    find(tree, k, result);
+    return result;
+  }
+
+  private static void find(BstNode<Integer> tree, int k, List<Integer> result) {
+    if (tree == null || result.size() >= k) return;
+
+    find(tree.right, k, result);
+    if (result.size() < k) result.add(tree.data);
+    find(tree.left, k, result);
   }
   @EpiTestComparator
   public static boolean comp(List<Integer> expected, List<Integer> result) {

@@ -5,25 +5,47 @@ import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 public class StackWithMax {
 
   public static class Stack {
+    List<List<Integer>> maxStack = new LinkedList<>();
+    List<Integer> stack = new LinkedList<>();
     public boolean empty() {
-      // TODO - you fill in here.
-      return true;
+      return stack.isEmpty();
     }
     public Integer max() {
-      // TODO - you fill in here.
-      return 0;
+      if (empty()) throw new IllegalStateException();
+      return maxStack.get(maxStack.size() - 1).get(0);
     }
     public Integer pop() {
-      // TODO - you fill in here.
-      return 0;
+      if (empty()) throw new IllegalStateException();
+      Integer v = stack.remove(stack.size() - 1);
+      List<Integer> max = maxStack.get(maxStack.size() - 1);
+      if (v == max.get(0)) {
+	      if (max.get(1) <= 1) {
+		      maxStack.remove(maxStack.size() - 1);
+	      } else {
+		      max.set(1, max.get(1) - 1);
+	      }
+      }
+      return v;
     }
     public void push(Integer x) {
       // TODO - you fill in here.
-      return;
+      stack.add(x);
+      if (maxStack.isEmpty()) {
+	      maxStack.add(Arrays.asList(x, 1));
+	      return;
+      }
+      List<Integer> max = maxStack.get(maxStack.size() - 1);
+      if (max.get(0) == x) {
+	      max.set(1, max.get(1));
+      } else if (max.get(0) < x) {
+	      maxStack.add(Arrays.asList(x ,1));
+      }
     }
   }
   @EpiUserType(ctorParams = {String.class, int.class})
