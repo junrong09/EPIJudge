@@ -5,6 +5,7 @@ import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -15,11 +16,22 @@ public class Hanoi {
 
   public static List<List<Integer>> computeTowerHanoi(int numRings) {
     // TODO - you fill in here.
-    return Collections.emptyList();
+    List<List<Integer>> steps = new LinkedList<>();
+    compute(numRings, 0, 1, steps);
+    return steps;
   }
+
+  public static void compute(int n, int from, int to, List<List<Integer>> steps) {
+    if (n < 1) return;
+    compute(n-1, from, 3 - from - to, steps);
+    System.out.printf("Move from peg %d to peg %d\n", from, to);
+    steps.add(Arrays.asList(from, to));
+    compute(n-1, 3 - from - to, to, steps);
+  }
+
   @EpiTest(testDataFile = "hanoi.tsv")
   public static void computeTowerHanoiWrapper(TimedExecutor executor,
-                                              int numRings) throws Exception {
+      int numRings) throws Exception {
     List<Deque<Integer>> pegs = new ArrayList<>();
     for (int i = 0; i < NUM_PEGS; i++) {
       pegs.add(new LinkedList<>());
@@ -29,7 +41,7 @@ public class Hanoi {
     }
 
     List<List<Integer>> result =
-        executor.run(() -> computeTowerHanoi(numRings));
+      executor.run(() -> computeTowerHanoi(numRings));
 
     for (List<Integer> operation : result) {
       int fromPeg = operation.get(0);
@@ -37,10 +49,10 @@ public class Hanoi {
       if (!pegs.get(toPeg).isEmpty() &&
           pegs.get(fromPeg).getFirst() >= pegs.get(toPeg).getFirst()) {
         throw new TestFailure("Illegal move from " +
-                              String.valueOf(pegs.get(fromPeg).getFirst()) +
-                              " to " +
-                              String.valueOf(pegs.get(toPeg).getFirst()));
-      }
+            String.valueOf(pegs.get(fromPeg).getFirst()) +
+            " to " +
+            String.valueOf(pegs.get(toPeg).getFirst()));
+          }
       pegs.get(toPeg).addFirst(pegs.get(fromPeg).removeFirst());
     }
 
@@ -67,8 +79,8 @@ public class Hanoi {
   public static void main(String[] args) {
     System.exit(
         GenericTest
-            .runFromAnnotations(args, "Hanoi.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+        .runFromAnnotations(args, "Hanoi.java",
+          new Object() {}.getClass().getEnclosingClass())
+        .ordinal());
   }
 }
