@@ -6,16 +6,36 @@ import epi.test_framework.LexicographicalListComparator;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Set;
 public class Permutations {
   @EpiTest(testDataFile = "permutations.tsv")
 
   public static List<List<Integer>> permutations(List<Integer> A) {
-    // TODO - you fill in here.
-    return null;
+    List<Integer> empty = new ArrayList<>();
+    List<List<Integer>> result = new ArrayList<>();
+    permute(new HashSet<>(A), empty, result);
+    return result;
   }
+
+  public static void permute(Set<Integer> A, List<Integer> nums, List<List<Integer>> result) {
+    if (A.isEmpty()) {
+      result.add(nums);
+    }
+
+    for (Integer a: A) {
+      List<Integer> newNums = new ArrayList(nums);
+      newNums.add(a);
+      Set<Integer> newA = new HashSet<>(A);
+      newA.remove(a);
+      permute(newA, newNums, result);
+    }
+  }
+
   @EpiTestComparator
   public static boolean comp(List<List<Integer>> expected,
-                             List<List<Integer>> result) {
+      List<List<Integer>> result) {
     if (result == null) {
       return false;
     }
@@ -33,8 +53,8 @@ public class Permutations {
   public static void main(String[] args) {
     System.exit(
         GenericTest
-            .runFromAnnotations(args, "Permutations.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+        .runFromAnnotations(args, "Permutations.java",
+          new Object() {}.getClass().getEnclosingClass())
+        .ordinal());
   }
 }
