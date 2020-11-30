@@ -6,16 +6,41 @@ import epi.test_framework.LexicographicalListComparator;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 public class PowerSet {
   @EpiTest(testDataFile = "power_set.tsv")
 
   public static List<List<Integer>> generatePowerSet(List<Integer> inputSet) {
     // TODO - you fill in here.
-    return null;
+    List<Integer> empty = new ArrayList<>();
+    List<List<Integer>> result = new ArrayList<>();
+    generate(new HashSet(inputSet), empty, result);
+    return result;
   }
+
+  public static void generate(Set<Integer> remainders, List<Integer> nums, List<List<Integer>> result) {
+    result.add(nums);
+    if (remainders.isEmpty()) {
+      return;
+    }
+
+    for (Integer r : remainders) {
+      if (!nums.isEmpty() && r < nums.get(nums.size() - 1)) {
+        continue;
+      }
+      List<Integer> newNums = new ArrayList<>(nums);
+      newNums.add(r);
+      Set<Integer> newRemainder = new HashSet(remainders);
+      newRemainder.remove(r);
+      generate(newRemainder, newNums, result);
+    }
+  }
+
   @EpiTestComparator
   public static boolean comp(List<List<Integer>> expected,
-                             List<List<Integer>> result) {
+      List<List<Integer>> result) {
     if (result == null) {
       return false;
     }
@@ -33,8 +58,8 @@ public class PowerSet {
   public static void main(String[] args) {
     System.exit(
         GenericTest
-            .runFromAnnotations(args, "PowerSet.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+        .runFromAnnotations(args, "PowerSet.java",
+          new Object() {}.getClass().getEnclosingClass())
+        .ordinal());
   }
 }
