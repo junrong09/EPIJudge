@@ -8,8 +8,20 @@ public class LowestCommonAncestorWithParent {
 
   public static BinaryTree<Integer> lca(BinaryTree<Integer> node0,
                                         BinaryTree<Integer> node1) {
-    // TODO - you fill in here.
-    return null;
+    // TODO - you fill  in here.
+    // O(h); O(1)
+    BinaryTree<Integer> ptr0 = node0, ptr1 = node1;
+    while (ptr0 != ptr1) {
+      ptr0 = ptr0.parent;
+      ptr1 = ptr1.parent;
+      if (ptr0 == null) {
+        ptr0 = node1;
+      }
+      if (ptr1 == null) {
+        ptr1 = node0;
+      }
+    }
+    return ptr0;
   }
   @EpiTest(testDataFile = "lowest_common_ancestor.tsv")
   public static int lcaWrapper(TimedExecutor executor, BinaryTree<Integer> tree,
