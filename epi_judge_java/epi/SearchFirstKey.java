@@ -8,7 +8,20 @@ public class SearchFirstKey {
 
   public static int searchFirstOfK(List<Integer> A, int k) {
     // TODO - you fill in here.
-    return 0;
+    // O(lg n); O(1)
+    int s = 0, e = A.size() - 1, found = -1;
+    while (s <= e) {
+      int m = ((e - s) / 2) + s;
+      if (A.get(m) == k) {
+        found = m;
+      }
+      if (A.get(m) < k) {
+        s = m + 1;
+        continue;
+      }
+      e = m - 1;
+    }
+    return found;
   }
 
   public static void main(String[] args) {
