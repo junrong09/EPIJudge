@@ -4,22 +4,37 @@ import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
-import java.util.List;
+import java.util.*;
 
 public class LruCache {
-  LruCache(final int capacity) {}
+  private Map<Integer, Integer> map;
+
+  public LruCache(final int capacity) {
+    // Can't compile, due to judge problem
+    this.map = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
+      @Override
+      protected boolean removeEldestEntry(Map.Entry<Integer,Integer> eldest) {
+        return this.size() > capacity;
+      }
+    };
+  }
+
   public Integer lookup(Integer key) {
     // TODO - you fill in here.
-    return 0;
+    // O(1)
+    return this.map.get(key);
   }
   public void insert(Integer key, Integer value) {
     // TODO - you fill in here.
-    return;
+    // O(1)
+    this.map.put(key, value);
   }
   public Boolean erase(Object key) {
     // TODO - you fill in here.
-    return true;
+    // O(1)
+    return this.map.remove(key) != null;
   }
+
   @EpiUserType(ctorParams = {String.class, int.class, int.class})
   public static class Op {
     String code;
