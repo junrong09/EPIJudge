@@ -5,8 +5,15 @@ public class SearchInBst {
 
   public static BstNode<Integer> searchBST(BstNode<Integer> tree, int key) {
     // TODO - you fill in here.
-    return null;
+    if (tree == null) return null;
+    if (tree.data == key) return tree;
+    if (key < tree.data) {
+      return searchBST(tree.left, key);
+    } else {
+      return searchBST(tree.right, key);
+    }
   }
+
   @EpiTest(testDataFile = "search_in_bst.tsv")
   public static int searchBSTWrapper(BstNode<Integer> tree, int key) {
     BstNode<Integer> result = searchBST(tree, key);
@@ -16,8 +23,8 @@ public class SearchInBst {
   public static void main(String[] args) {
     System.exit(
         GenericTest
-            .runFromAnnotations(args, "SearchInBst.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+        .runFromAnnotations(args, "SearchInBst.java",
+          new Object() {}.getClass().getEnclosingClass())
+        .ordinal());
   }
 }
