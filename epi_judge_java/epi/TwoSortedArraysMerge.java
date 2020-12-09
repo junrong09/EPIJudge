@@ -7,32 +7,19 @@ public class TwoSortedArraysMerge {
 
   public static void mergeTwoSortedArrays(List<Integer> A, int m,
       List<Integer> B, int n) {
-    // TODO - you fill in here.
-    // O(n); O(1)``
-    int ptr1 = A.size() - 1;
-    for (int i = m - 1; i > -1; i--) {
-      Collections.swap(A, i, ptr1--);
-    }
-    ptr1++;
-    int ptr2 = 0, ptrAdd = 0;
-    while (ptr1 < A.size() && ptr2 < n) {
+    int ptr1 = m - 1, ptr2 = n - 1, ptrAdd = m + n - 1;
+    while (ptr1 > -1 && ptr2 > -1) {
       int a = A.get(ptr1), b = B.get(ptr2);
-      if (a < b) {
-        A.set(ptrAdd++, a);
-        if (ptrAdd - 1 != ptr1) A.set(ptr1, 0);
-        ptr1++;
+      if (a > b) {
+        A.set(ptrAdd--, a);
+        ptr1--;
       } else {
-        A.set(ptrAdd++, b);
-        ptr2++;
+        A.set(ptrAdd--, b);
+        ptr2--;
       }
     }
-    while (ptr1 < A.size()) {
-      A.set(ptrAdd++, A.get(ptr1));
-      if (ptrAdd - 1 != ptr1 )A.set(ptr1, 0);
-      ptr1++;
-    }
-    while (ptr2 < n) {
-      A.set(ptrAdd++, B.get(ptr2++));
+    while (ptr2 > -1) {
+      A.set(ptrAdd--, B.get(ptr2--));
     }
   }
 
