@@ -9,13 +9,24 @@ public class LowestCommonAncestorInBst {
   // Input nodes are nonempty and the key at s is less than or equal to that at
   // b.
   public static BstNode<Integer>
-  findLca(BstNode<Integer> tree, BstNode<Integer> s, BstNode<Integer> b) {
-    // TODO - you fill in here.
-    return null;
-  }
+    findLca(BstNode<Integer> tree, BstNode<Integer> s, BstNode<Integer> b) {
+      // TODO - you fill in here.
+      // O(h); O(1)
+      while (tree != null) {
+        if (tree.data > s.data && tree.data > b.data) {
+          tree = tree.left;
+        } else if (tree.data < s.data && tree.data < b.data) {
+          tree = tree.right;
+        } else {
+          return tree;
+        }
+      }
+      return null;
+    }
+
   @EpiTest(testDataFile = "lowest_common_ancestor_in_bst.tsv")
   public static int lcaWrapper(TimedExecutor executor, BstNode<Integer> tree,
-                               Integer key0, Integer key1) throws Exception {
+      Integer key0, Integer key1) throws Exception {
     BstNode<Integer> node0 = BinaryTreeUtils.mustFindNode(tree, key0);
     BstNode<Integer> node1 = BinaryTreeUtils.mustFindNode(tree, key1);
 
@@ -30,8 +41,8 @@ public class LowestCommonAncestorInBst {
   public static void main(String[] args) {
     System.exit(
         GenericTest
-            .runFromAnnotations(args, "LowestCommonAncestorInBst.java",
-                                new Object() {}.getClass().getEnclosingClass())
-            .ordinal());
+        .runFromAnnotations(args, "LowestCommonAncestorInBst.java",
+          new Object() {}.getClass().getEnclosingClass())
+        .ordinal());
   }
 }
