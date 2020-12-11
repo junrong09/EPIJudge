@@ -5,7 +5,17 @@ public class ReverseDigits {
   @EpiTest(testDataFile = "reverse_digits.tsv")
   public static long reverse(int x) {
     // TODO - you fill in here.
-    return 0;
+    // O(d); O(1)
+    int temp = x;
+    long result = 0;
+    while (temp != 0) {
+      int d = temp % 10;
+      result += d;
+      temp /= 10;
+      result *= 10;
+    }
+    result /= 10;
+    return result;
   }
 
   public static void main(String[] args) {
