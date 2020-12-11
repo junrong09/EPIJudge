@@ -5,7 +5,13 @@ public class Parity {
   @EpiTest(testDataFile = "parity.tsv")
   public static short parity(long x) {
     // TODO - you fill in here.
-    return 0;
+    // O(log n); O(1)
+    int shift = 32;
+    while (shift != 0) {
+      x ^= x >>> shift;
+      shift /= 2;
+    }
+    return (short) (x & 1);
   }
 
   public static void main(String[] args) {
